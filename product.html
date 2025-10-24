@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="Utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lumieres_parfume</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+  <section id="header">
+    <a href="#"><img src="img/logo.png" class="logo" alt=""></a>
+    <div> 
+      <ul id="navbar">
+        <li><a href="index.html">Home</a></li>
+        <li><a class="active" href="shop.html">Shop</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contect.html">Contact</a></li>
+        <li id="Ig-bag"><a href="cart.html"><i class="fa fa-shopping-bag" style="font-size:36px"></i></a></li>
+        <a href="#" id="close"><i class="far fa-times" ></i></a>
+      </ul>
+    </div>
+    <div id="mobile">
+      <a href="cart.html"><i class="fa fa-shopping-bag" style="font-size:36px"></i></a>
+      <i id="bar" class="fas fa-outdent"></i>
+    </div>
+  </section>
+
+  <section id="prodetails" class="section-p1">
+    <div class="single-pro-image">
+      <img src="" width="100%" id="MainImg" alt="">
+      <div class="small-img-group" id="small-img-group"></div>
+    </div>
+    <div class="single-pro-details">
+      <h6>Home / Candle</h6>
+      <h4 id="product-name"></h4>
+      <h2 id="product-price"></h2>
+      <select id="product-scents"></select>
+      <input type="number" value="1" min="0" step="1">
+      <button class="normal">Add to Cart</button>
+      <h4>Product Details</h4>
+      <span id="product-desc"></span>
+    </div>
+  </section>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+
+    const products = {
+      1: {
+        name: "Rose Bouquet Candle",
+        price: "1500L",
+        scents: ["Rose", "Vanilia", "Orange"],
+        description: "Bouquet-shaped hand-crafted soy wax candle with elegant style.",
+        images: [
+          "img/product/buqeta.jpg",
+          "img/product/buqeta 1.jpg",
+          "img/product/buqeta 2.jpg",
+          "img/product/buqeta3.jpg"
+        ]
+      },
+      2: {
+        name: "Teddy Blossom Candle",
+        price: "1500L",
+        scents: ["Vanilia", "Coconut"],
+        description: "Cute teddy shape candle – perfect for romantic gifts.",
+        images: [
+          "img/product/arushii.png",
+          "img/product/arushi1.jpg",
+          "img/product/arushi2.jpg",
+          "img/product/arushi3.jpg"
+        ]
+      }
+    };
+
+    const product = products[id];
+
+    if (product) {
+      document.getElementById("product-name").innerText = product.name;
+      document.getElementById("product-price").innerText = product.price;
+      document.getElementById("product-desc").innerText = product.description;
+
+      const scentSelect = document.getElementById("product-scents");
+      product.scents.forEach(scent => {
+        const option = document.createElement("option");
+        option.textContent = scent;
+        scentSelect.appendChild(option);
+      });
+
+      document.getElementById("MainImg").src = product.images[0];
+
+      const smallGroup = document.getElementById("small-img-group");
+      product.images.forEach((src) => {
+        const col = document.createElement("div");
+        col.className = "small-img-col";
+        col.innerHTML = `<img src="${src}" width="100%" class="small-img">`;
+        smallGroup.appendChild(col);
+      });
+
+      setTimeout(() => {
+        document.querySelectorAll('.small-img').forEach((img) => {
+          img.onclick = () => {
+            document.getElementById("MainImg").src = img.src;
+          };
+        });
+      }, 100);
+    } else {
+      document.querySelector(".single-pro-details").innerHTML = "<p>Product not found.</p>";
+    }
+  </script>
+</body>
+</html>
